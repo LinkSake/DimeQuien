@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="es-MX">
+
+  <head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="Luis Ángel Ortega">
+
+    <title>Mi Distrito Electoral CUU</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom fonts for this template -->
+    <link href="vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" rel="stylesheet" type="text/css">
+    <link href='https://fonts.googleapis.com/css?family=Cabin:700' rel='stylesheet' type='text/css'>
+
+    <!-- Custom styles for this template -->
+    <link href="css/grayscale.min.css" rel="stylesheet">
+
+
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script type="text/javascript" src="js/District-Check.js"></script>
+
+  </head>
+
+  <body id="page-top">
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
+      <div class="container">
+        <a class="navbar-brand js-scroll-trigger" href="#page-top">Mi Distrito Electoral CUU</a>
+        <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+          Menu
+          <i class="fa fa-bars"></i>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+          <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+              <a class="nav-link js-scroll-trigger" href="#about">¿Qué es?</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link js-scroll-trigger" href="#address">Conoce tu distrito</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Intro Header -->
+    <header class="masthead">
+      <div class="intro-body">
+        <div class="container">
+          <div class="row">
+            <div class="col-lg-8 mx-auto">
+              <br>
+              <h1 class="brand-heading">Mi Distrito Electoral CUU</h1>
+              <p class="intro-text">Una simple manera de saber tu distrito electoral dentro de la ciudad de Chihuahua
+                <br>Sin secciónes, simplemente ingresa tu dirección o ubicate el mapa</p>
+              <a href="#address" class="btn btn-circle js-scroll-trigger">
+                <i class="fa fa-angle-double-down animated"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- About Section -->
+    <section id="about" class="content-section text-center">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-8 mx-auto">
+            <h2>About Grayscale</h2>
+            <p>Grayscale is a free Bootstrap theme created by Start Bootstrap. It can be yours right now, simply download the template on
+              <a href="http://startbootstrap.com/template-overviews/grayscale/">the preview page</a>. The theme is open source, and you can use it for any purpose, personal or commercial.</p>
+            <p>This theme features stock photos by
+              <a href="http://gratisography.com/">Gratisography</a>
+              along with a custom Google Maps skin courtesy of
+              <a href="http://snazzymaps.com/">Snazzy Maps</a>.</p>
+            <p>Grayscale includes full HTML, CSS, and custom JavaScript files along with SASS and LESS files for easy customization!</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Address Section -->
+    <section id="address" class="download-section content-section text-center">
+      <div class="container">
+        <div class="card-block">
+          <h2 id="text-center">Ingresa tu colonia </h2>
+          <form id="location-form">
+              <input type="text" class="form-control form-control-lg" id="location-input">
+              <button type="submit" class="btn btn-dark btn-block js-scroll-trigger" id="submit">Enviar</button>
+          </form>
+        </div>
+        <br>
+        <h2 id="text-center">O usa el mapa </h2>
+      </div>
+    </section>
+
+    <!-- Map Section -->
+    <div id="map"></div>
+
+    <!-- District Section -->
+    <section id="discrict" class="content-section text-center">
+      <div class="container">
+        <div class="card-block" id="district"></div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+      <div class="container text-center">
+        <p>Copyright &copy; Luis Ángel Ortega 2018 (@LinkSake)</p>
+      </div>
+    </footer>
+
+    <!-- Bootstrap core JavaScript -->
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Plugin JavaScript -->
+    <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+
+    <!-- Google Maps API Key - Use your own API key to enable the map feature. More information on the Google Maps API can be found at https://developers.google.com/maps/ -->
+    <script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDwCnx_2qbRtlcFY7C37NMd3EatPQHHkw4&callback=initMap&libraries=geometry">
+    </script>
+
+    <!-- Custom scripts for this template -->
+    <script src="js/grayscale.min.js"></script>
+
+    <script>
+
+      var locationForm = document.getElementById('location-form');
+      locationForm.addEventListener('submit',geocode);
+
+      function initMap(){
+
+          //Map options
+          const options = {
+              zoom: 12.5,
+              center: {lat: 28.63000, lng: -106.07361}
+          }
+
+          //Creating new map
+          const map = new google.maps.Map(document.getElementById('map'),options);
+
+          var marker = new google.maps.Marker({
+              position: {lat: 28.6300,lng: -106.07361},
+              map: map,
+          });
+          
+          //Move marker
+          google.maps.event.addListener(map, 'click', function (event) {
+
+              //Get geometry of new marker
+              marker.setPosition(event.latLng);
+              position = marker.getPosition();
+              lat = position.lat();
+              lng = position.lng();
+              
+              //Create new LatLng object
+              const curPosition = new google.maps.LatLng(lat,lng);
+
+              //Get District
+              var district = getDistrict(curPosition);
+              var districtOutput = `
+              <h1>Mi distrito es:</h1> <br>
+              <h1>${district}</h1>
+              `;
+
+            $('html, body').animate({
+              scrollTop: $("#district").offset().top
+            }, 1000);
+
+              //Output to app
+              document.getElementById('district').innerHTML = districtOutput;
+
+          });
+      }
+
+      //Geocode, que usa axios para hacer un get a la API de Google y devolvernos un response
+      function geocode(e){
+
+        $("#submit").click(function() {
+          $('html, body').animate({
+            scrollTop: $("#district").offset().top
+          }, 1000);
+        });
+
+
+          //Prevent actual submit
+          e.preventDefault();
+
+          var location = document.getElementById('location-input').value+' chihuahua';
+          axios.get('https://maps.googleapis.com/maps/api/geocode/json',{
+              params: {
+                  address: location,
+                  key: 'AIzaSyDwCnx_2qbRtlcFY7C37NMd3EatPQHHkw4'
+              }
+          }
+          ).then(function(response){
+
+              //Geomtery
+              var lat = response.data.results[0].geometry.location.lat;
+              var lng = response.data.results[0].geometry.location.lng;
+              const curPosition = new google.maps.LatLng(lat,lng);
+
+              //Get District
+              var district = getDistrict(curPosition);
+              var districtOutput = `
+              <h1>Mi distrito es:</h1> <br>
+              <h1>${district}</h1>
+              `;
+
+              //Output to app
+              document.getElementById('district').innerHTML = districtOutput;
+
+          }).catch(function(error){
+              console.log(error);
+          });
+      }
+      
+    </script>
+
+  </body>
+
+</html>
