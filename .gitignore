@@ -1,2 +1,4 @@
 # Node_Modules cause conflict with github
-**/node_modules
+node_modules/
+
+package-lock.json
