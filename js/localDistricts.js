@@ -1,4 +1,4 @@
-function getDistrict(coords){
+function getLocalDistrict(coords){
 
     //Create polygon of District 12
     const district12Coords= [
