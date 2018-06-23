@@ -21,9 +21,13 @@
     <!-- Custom styles for this template -->
     <link href="css/grayscale.min.css" rel="stylesheet">
 
-
+    <!-- Used to send GET requests to Google Map's API -->
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-    <script type="text/javascript" src="js/District-Check.js"></script>
+
+    <!-- District checks -->
+    <script type="text/javascript" src="js/localDistricts.js"></script>
+    <script type="text/javascript" src="js/federalDistricts.js"></script>
+    <script type="text/javascript" src="js/districtConvination.js"></script>
 
   </head>
 
@@ -128,7 +132,7 @@
     <!-- Plugin JavaScript -->
     <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
 
-    <!-- Google Maps API Key - Use your own API key to enable the map feature. More information on the Google Maps API can be found at https://developers.google.com/maps/ -->
+    <!-- Google Maps API Key - Use your own API key to enable the map feature. -->
     <script async defer
     src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDwCnx_2qbRtlcFY7C37NMd3EatPQHHkw4&callback=initMap&libraries=geometry">
     </script>
@@ -141,6 +145,7 @@
       var locationForm = document.getElementById('location-form');
       locationForm.addEventListener('submit',geocode);
 
+      //Initializes the map and has the functions that get the distict
       function initMap(){
 
           //Map options
@@ -169,24 +174,22 @@
               //Create new LatLng object
               const curPosition = new google.maps.LatLng(lat,lng);
 
-              //Get District
-              var district = getDistrict(curPosition);
-              var districtOutput = `
-              <h1>Tu distrito es el</h1> <br>
-              <h1>${district}</h1>
-              `;
+              //Get Local District
+              var localDistrict = getLocalDistrict(curPosition);
+              var localDistrictOutput = `<h1>Tu distrito local es el ${localDistrict}</h1>`;
 
-            $('html, body').animate({
-              scrollTop: $("#district").offset().top
-            }, 1000);
+              //Get Federal District
+              var federalDistrict = getFederalDistrict(curPosition);
+              var federalDistrictOutput = `<br><h1>Tu distrito federal es el ${federalDistrict}</h1>`;
+
+              var districtOutput = localDistrictOutput + federalDistrictOutput;
 
               //Output to app
               document.getElementById('district').innerHTML = districtOutput;
-
           });
       }
 
-      //Geocode, que usa axios para hacer un get a la API de Google y devolvernos un response
+      //This script is the logic behind putting the address to get the district
       function geocode(e){
 
         $("#submit").click(function() {
@@ -213,12 +216,15 @@
               var lng = response.data.results[0].geometry.location.lng;
               const curPosition = new google.maps.LatLng(lat,lng);
 
-              //Get District
-              var district = getDistrict(curPosition);
-              var districtOutput = `
-              <h1>Tu distrito es el</h1> <br>
-              <h1>${district}</h1>
-              `;
+              //Get Local District
+              var localDistrict = getLocalDistrict(curPosition);
+              var localDistrictOutput = `<h1>Tu distrito local es el ${localDistrict}</h1>`;
+
+              //Get Federal District
+              var federalDistrict = getFederalDistrict(curPosition);
+              var federalDistrictOutput = `<br><h1>Tu distrito federal es el ${federalDistrict}</h1>`;
+
+              var districtOutput = localDistrictOutput + federalDistrictOutput;
 
               //Output to app
               document.getElementById('district').innerHTML = districtOutput;
