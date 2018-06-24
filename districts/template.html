@@ -80,7 +80,7 @@
           <h2 class="my-4">Presidencia de la República</h2>
         </div>
         <div class="col-lg-4 col-sm-4 text-center mb-4">
-          <img class="rounded-circle img-fluid d-block mx-auto" src="../img/candidatos/" alt="">
+          <img class="rounded-circle img-fluid d-block mx-auto" src="../img/candidatos/andrs-manuel-lpez-obrador.png" alt="">
           <h4>Andrés Manuel López Obrador
             <small> MORENA-PT-PES | 64 años</small>
           </h4>
@@ -90,7 +90,7 @@
           <a href="https://lopezobrador.org.mx/"><i class="fas fa-link"></i></a>
         </div>
         <div class="col-lg-4 col-sm-4 text-center mb-4">
-          <img class="rounded-circle img-fluid d-block mx-auto" src="../img/candidatos/" alt="">
+          <img class="rounded-circle img-fluid d-block mx-auto" src="../img/candidatos/Jose-Antonio-Meade.png" alt="">
           <h4>José Antonio Meade Kuribreña
             <small> PRI-PVEM-PANAL | 49 años</small>
           </h4>
@@ -100,7 +100,7 @@
           <a href="https://meade18.com/"><i class="fas fa-link"></i></a>
         </div>
         <div class="col-lg-4 col-sm-4 text-center mb-4">
-          <img class="rounded-circle img-fluid d-block mx-auto" src="../img/candidatos/" alt="">
+          <img class="rounded-circle img-fluid d-block mx-auto" src="../img/candidatos/RICARDO_ANAYA_CORTES_PAN.png" alt="">
           <h4>Ricardo Anaya Cortés <br>
             <small> PAN-PRD-MC | 39 años</small>
           </h4>
@@ -110,7 +110,7 @@
           <a href="https://www.ricardoanaya.com.mx/"><i class="fas fa-link"></i></a>
         </div>
         <div class="col-lg-4 col-sm-4 text-center mb-4">
-          <img class="rounded-circle img-fluid d-block mx-auto" src="../img/candidatos/" alt="">
+          <img class="rounded-circle img-fluid d-block mx-auto" src="../img/candidatos/Rodriguez-Calderon-Jaime-1.png" alt="">
           <h4>Jaime Rodríguez Calderón
             <small> Independiente | 60 años</small>
           </h4>
@@ -1253,6 +1253,37 @@
     <script src="../vendor/jquery/jquery.min.js"></script>
     <script src="../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
+    <!-- Smooth Scroll -->
+    <script>
+      $(document).ready(function(){
+        // Add scrollspy to <body>
+        $('body').scrollspy({target: ".navbar", offset: 50});   
+      
+        // Add smooth scrolling on all links inside the navbar
+        $("#navbarResponsive a").on('click', function(event) {
+          // Make sure this.hash has a value before overriding default behavior
+          if (this.hash !== "") {
+            // Prevent default anchor click behavior
+            event.preventDefault();
+      
+            // Store hash
+            var hash = this.hash;
+      
+            // Using jQuery's animate() method to add smooth page scroll
+            // The optional number (800) specifies the number of milliseconds it takes to scroll to the specified area
+            $('html, body').animate({
+              scrollTop: $(hash).offset().top
+            }, 800, function(){
+         
+              // Add hash (#) to URL when done scrolling (default click behavior)
+              window.location.hash = hash;
+            });
+          }  // End if
+        });
+      });
+    </script>
+
   </body>
 
+  
 </html>

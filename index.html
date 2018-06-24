@@ -8,7 +8,7 @@
     <meta name="description" content="">
     <meta name="author" content="Luis Ángel Ortega">
 
-    <title>Mi Distrito Electoral CUU</title>
+    <title>Dime Quien</title>
 
     <!-- Bootstrap core CSS -->
     <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -27,7 +27,7 @@
     <!-- District checks -->
     <script type="text/javascript" src="js/localDistricts.js"></script>
     <script type="text/javascript" src="js/federalDistricts.js"></script>
-    <script type="text/javascript" src="js/districtConvination.js"></script>
+    <script type="text/javascript" src="js/districtCombination.js"></script>
 
   </head>
 
@@ -143,6 +143,8 @@
       var locationForm = document.getElementById('location-form');
       locationForm.addEventListener('submit',geocode);
 
+      var dL, dF = 0;
+
       //Initializes the map and has the functions that get the distict
       function initMap(){
 
@@ -175,12 +177,24 @@
               //Get Local District
               var localDistrict = getLocalDistrict(curPosition);
               var localDistrictOutput = `<h1>Tu distrito local es el ${localDistrict}</h1>`;
+              dL = localDistrict;
 
               //Get Federal District
               var federalDistrict = getFederalDistrict(curPosition);
               var federalDistrictOutput = `<br><h1>Tu distrito federal es el ${federalDistrict}</h1>`;
+              dF = federalDistrict;
 
-              var districtOutput = localDistrictOutput + federalDistrictOutput;
+
+              //Generate button with candidates
+              var rute = checkCombination(dL,dF);
+              console.log(rute);
+              var ruteOutput = `
+                <div>
+                  <a class="btn btn-large btn-info" href="${rute}">Conoce a tus candidatos</a>
+                </div>
+              `;
+
+              var districtOutput = localDistrictOutput + federalDistrictOutput + ruteOutput;
 
               //Output to app
               document.getElementById('district').innerHTML = districtOutput;
@@ -190,6 +204,7 @@
       //This script is the logic behind putting the address to get the district
       function geocode(e){
 
+        //Smooth scroll
         $("#submit").click(function() {
           $('html, body').animate({
             scrollTop: $("#district").offset().top
@@ -217,12 +232,23 @@
               //Get Local District
               var localDistrict = getLocalDistrict(curPosition);
               var localDistrictOutput = `<h1>Tu distrito local es el ${localDistrict}</h1>`;
+              dL = localDistrict;
 
               //Get Federal District
               var federalDistrict = getFederalDistrict(curPosition);
               var federalDistrictOutput = `<br><h1>Tu distrito federal es el ${federalDistrict}</h1>`;
+              dF = federalDistrict;
 
-              var districtOutput = localDistrictOutput + federalDistrictOutput;
+              //Generate button with candidates
+              var rute = checkCombination(dL,dF);
+              console.log(rute);
+              var ruteOutput = `
+                <div>
+                  <a class="btn btn-large btn-info" href="${rute}">Conoce a tus candidatos</a>
+                </div>
+              `;
+
+              var districtOutput = localDistrictOutput + federalDistrictOutput + ruteOutput;
 
               //Output to app
               document.getElementById('district').innerHTML = districtOutput;
@@ -231,7 +257,7 @@
               console.log(error);
           });
       }
-      
+
     </script>
 
   </body>
