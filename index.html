@@ -120,7 +120,7 @@
     <section id="discrict" class="content-section text-center">
       <div class="container">
         <div class="card-block" id="district">
-            <h1 id="respuesta">Una vez seleccionado tu ubicación en el mapa, aqui aparecerá tu distrito local y federal...</h1>
+            <h1 id="respuesta">Una vez seleccionado tu ubicación en el mapa, aquí aparecerá tu distrito local y federal...</h1>
         </div>
       </div>
     </section>
@@ -128,7 +128,7 @@
     <!-- Footer -->
     <footer>
       <div class="container text-center">
-        <p>Copyright &copy; Wikipolitica & Luis Ángel Ortega 2018 <br> <a href="https://github.com/LinkSake/DimeQuien"><i class="fab fa-github"></i></a></p>
+        <p>Copyright &copy; Wikipolitica, Daniel Aguilera & Luis Ángel Ortega (2018) <br> <a href="https://github.com/LinkSake/DimeQuien"><i class="fab fa-github"></i></a></p>
       </div>
     </footer>
 
@@ -193,20 +193,25 @@
               var federalDistrictOutput = `<br><h1>Tu distrito federal es el ${federalDistrict}</h1>`;
               dF = federalDistrict;
 
+              if (localDistrict == undefined || federalDistrict == undefined) {
 
-              //Generate button with candidates
-              var rute = checkCombination(dL,dF);
-              console.log(rute);
-              var ruteOutput = `
-                <div>
-                  <a class="btn btn-large btn-info" href="${rute}">Conoce a tus candidatos</a>
-                </div>
-              `;
+                document.getElementById('district').innerHTML = '<h1> Ingresa una dirección en la ciudad de Chihuahua válida';
 
-              var districtOutput = localDistrictOutput + federalDistrictOutput + ruteOutput;
+              } else {
+                //Generate button with candidates
+                var rute = checkCombination(dL,dF);
+                console.log(rute);
+                var ruteOutput = `
+                  <div>
+                    <a class="btn btn-large btn-info" href="${rute}">Conoce a tus candidatos</a>
+                  </div>
+                `;
 
-              //Output to app
-              document.getElementById('district').innerHTML = districtOutput;
+                var districtOutput = localDistrictOutput + federalDistrictOutput + ruteOutput;
+
+                //Output to app
+                document.getElementById('district').innerHTML = districtOutput;
+              }
           });
       }
 
@@ -248,19 +253,25 @@
               var federalDistrictOutput = `<br><h1>Tu distrito federal es el ${federalDistrict}</h1>`;
               dF = federalDistrict;
 
-              //Generate button with candidates
-              var rute = checkCombination(dL,dF);
-              console.log(rute);
-              var ruteOutput = `
-                <div>
-                  <a class="btn btn-large btn-info" href="${rute}">Conoce a tus candidatos</a>
-                </div>
-              `;
+              if (localDistrict == undefined || federalDistrict == undefined) {
+                
+                document.getElementById('district').innerHTML = '<h1> Ingresa una dirección en la ciudad de Chihuahua válida';
 
-              var districtOutput = localDistrictOutput + federalDistrictOutput + ruteOutput;
+              } else {
+                //Generate button with candidates
+                var rute = checkCombination(dL,dF);
+                console.log(rute);
+                var ruteOutput = `
+                  <div>
+                    <a class="btn btn-large btn-info" href="${rute}">Conoce a tus candidatos</a>
+                  </div>
+                `;
 
-              //Output to app
-              document.getElementById('district').innerHTML = districtOutput;
+                var districtOutput = localDistrictOutput + federalDistrictOutput + ruteOutput;
+
+                //Output to app
+                document.getElementById('district').innerHTML = districtOutput;
+              }
 
           }).catch(function(error){
               console.log(error);
